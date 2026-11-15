@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="Samuel Hager" content="this is the start of something new!">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="logger.css">
+	<title>Login?</title>
+</head>
+
+<body>
+
+<header>
+	<a href="signup-page.html">Sign-Up</a>
+    <a href="login-serv-vuln1.html">Login</a>
+</header>
+
+<main>
+	<form	action="/changepass" method="POST">
+		<div id="centerFH">
+			<h1>Change Password? Why?</h1>
+		</div>
+		<div id="change-pass">
+			<div class="aligner">
+				<lable for="username/email">Username or Email:</lable>
+				<input type="text" name="username/email" autocomplete="name">
+			</div>
+			
+			<div class="aligner">
+				<lable for="pass">New Password:</lable>
+				<input type="text" name="pass" autocomplete="password">
+			</div>
+			
+			<div class="aligner">
+				<lable for="passconf">Confirm New Password:</lable>
+				<input type="text" name="passconf" autocomplete="password">
+			</div>	
+
+			<button type="submit">Submit Here</button>
+		</div>
+		
+	</form>
+</main>
+
+</body>
+
+<footer></footer>
+
+</html>

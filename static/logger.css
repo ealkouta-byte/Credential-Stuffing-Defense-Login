@@ -1,0 +1,84 @@
+header{
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: blue;
+border-bottom: solid black 2px;
+height: 60px;
+margin: 0px;
+padding: 0px;
+}
+
+header a{
+    border: solid black 2px;
+    text-decoration: none;
+    padding: 10px;
+    margin: 5px;
+    color: white;
+}
+
+/*header elements {}*/
+
+body{
+border-color:green;
+margin: 0px;
+height: 1000px;
+}
+
+main{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 700px;
+}
+
+/*start of form css*/
+form {
+
+}
+/*centers H1 in form*/
+#centerFH{
+display: flex;
+justify-content: center;
+color: blue;
+margin-bottom: 0px;
+}
+form input{
+width: 100px;
+height: 15px;
+}
+form lable{
+margin-right: 4px;
+}
+form button{
+margin: 2%;
+width: 50%;
+height: 40px;
+font-size: 30px;
+}
+.aligner{
+display: flex;
+font-size: 20px;
+margin-top: 20px;
+margin-bottom: 20px;
+margin-left: 20px;
+}
+
+#login-style {
+display: flex;
+flex-direction: column;
+border: red solid 5px;
+font-style: times;
+color: blue;
+background-color: #ffff;
+margin: 0px;
+width: 400px;
+height: 300px;
+}
+#alignBottoms{
+display: flex;
+font-size: 20px;
+margin: 10px;
+flex-direction: column;
+}
+/*end of form css*/
