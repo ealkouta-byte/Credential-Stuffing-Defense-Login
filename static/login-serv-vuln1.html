@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="Samuel Hager" content="this is the start of something new!">
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="logger.css">
+	<link rel="stylesheet" href="/static/logger.css">
 	<title>Login?</title>
 </head>
 
@@ -22,19 +22,14 @@
 		</div>
 		<div id="login-style">
 			<div class="aligner">
-				<lable for="username">Username:</lable>
-				<input type="text" name="username" autocomplete="name">
+				<label for="username">Username:</label>
+				<input type="text" name="username" id="username" autocomplete="username" required>
 			</div>
 			
 			<div class="aligner">
-				<lable for="pass">Password:</lable>
-				<input type="text" name="pass" autocomplete="password">
+				<label for="password">Password:</label>
+				<input type="password" name="password" id="password" autocomplete="current-password" required>
 			</div>
-			
-			<div class="aligner">
-				<lable for="passconf">Password Confirmation:</lable>
-				<input type="text" name="passconf" autocomplete="password">
-			</div>	
 
 			<div id="alignBottoms">
 			<button type="submit">Submit Here</button>

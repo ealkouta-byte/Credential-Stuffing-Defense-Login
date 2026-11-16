@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="eng">
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="Samuel Hager" content="this is the start of something new!">
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="signer.css">
+	<link rel="stylesheet" href="/static/signer.css">
 	<title>Sign Up?</title>
 </head>
 
@@ -22,26 +22,26 @@
 		</div>
 		<div id="signup-style">
 			<div class="aligner">
-				<lable for="username">Email:</lable>
-				<input type="text" name="username" autocomplete="name">
+				<label for="email">Email:</label>
+				<input type="email" name="email" id="email" autocomplete="email" required>
 			</div>
 			<div class="aligner">
-				<lable for="username">Email Confirmation:</lable>
-				<input type="text" name="username" autocomplete="name">
+				<label for="emailConfirmation">Email Confirmation:</label>
+				<input type="email" name="emailConfirmation" id="emailConfirmation" autocomplete="email" required>
 			</div>
 			<div class="aligner">
-				<lable for="username">Username:</lable>
-				<input type="text" name="username" autocomplete="name">
-			</div>
-			
-			<div class="aligner">
-				<lable for="pass">Password:</lable>
-				<input type="text" name="pass" autocomplete="password">
+				<label for="username">Username:</label>
+				<input type="text" name="username" id="username" autocomplete="username" required>
 			</div>
 			
 			<div class="aligner">
-				<lable for="passconf">Password Confirmation:</lable>
-				<input type="text" name="passconf" autocomplete="password">
+				<label for="password">Password:</label>
+				<input type="password" name="password" id="password" autocomplete="password" required>
+			</div>
+			
+			<div class="aligner">
+				<label for="passwordConfirmation">Password Confirmation:</label>
+				<input type="password" name="passwordConfirmation" id="passwordConfirmation" autocomplete="new-password" required>
 			</div>
 			<div id="alignBottoms">
 			<button type="submit" id="button">Submit Here</button>

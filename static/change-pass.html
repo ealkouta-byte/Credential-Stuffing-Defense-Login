@@ -5,8 +5,8 @@
 	<meta charset="UTF-8">
 	<meta name="Samuel Hager" content="this is the start of something new!">
 	<meta name="viewport" content="width=device-width">
-	<link rel="stylesheet" href="logger.css">
-	<title>Login?</title>
+	<link rel="stylesheet" href="static/change-pass.css">
+	<title>Change?</title>
 </head>
 
 <body>
@@ -23,18 +23,18 @@
 		</div>
 		<div id="change-pass">
 			<div class="aligner">
-				<lable for="username/email">Username or Email:</lable>
-				<input type="text" name="username/email" autocomplete="name">
+				<label for="username_or_email">Username or Email:</label>
+				<input type="text" name="username_or_email" id="username_or_email" autocomplete="username" required>
 			</div>
 			
 			<div class="aligner">
-				<lable for="pass">New Password:</lable>
-				<input type="text" name="pass" autocomplete="password">
+				<label for="oldPassword">Old Password:</label>
+				<input type="password" name="oldPassword" id="oldPassword" autocomplete="password" required>
 			</div>
 			
 			<div class="aligner">
-				<lable for="passconf">Confirm New Password:</lable>
-				<input type="text" name="passconf" autocomplete="password">
+				<label for="newPassword">New Password</label>
+				<input type="password" name="newPassword" id="newPassword" autocomplete="new-password" required>
 			</div>	
 
 			<button type="submit">Submit Here</button>
