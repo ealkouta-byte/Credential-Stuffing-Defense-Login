@@ -2,7 +2,7 @@
 import sqlite3
 import bcrypt
 from fastapi import FastAPI, Form, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 #init fast api
@@ -28,6 +28,11 @@ def create_a_table():
     #close db connection
     db.close()
 
+#this stops the crash on a fresh clone, because the server creates 
+#an empty table on startup. Signup and login work right away, 
+#just with no seeded users yet.
+create_a_table()
+
 #hash the passwords if they don't exist
 def hash_password(password):
     return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
@@ -35,6 +40,10 @@ def hash_password(password):
 #check if password typed is already saved
 def check_password(password, stored_hash):
     return bcrypt.checkpw(password.encode(), stored_hash.encode())
+
+@app.get("/")
+def root():
+    return RedirectResponse("/signup-page.html")
 
 #setup post action from form
 @app.post("/signup")
@@ -54,7 +63,7 @@ def signup(email: str=Form(...), emailConfirmation: str=Form(...), username: str
         db.execute("INSERT INTO users VALUES (?,?,?)", (email, username, hash_password(password)))
         db.commit()
 
-    #if it fails to save to db it will except and print username already taken
+    #if it fails to save to db it will raise an error and print username or email already taken
     except sqlite3.IntegrityError:
         raise HTTPException(status_code=400, detail="Username or Email already taken")
     
@@ -84,6 +93,7 @@ def login(username: str = Form(...), password: str = Form(...)):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     return {"message": "Login successful"}
 
+#setup login action for change password page
 @app.post("/changepass")
 
 def change_password(username_or_email: str = Form(None), oldPassword: str = Form(...), newPassword: str = Form(...)):
