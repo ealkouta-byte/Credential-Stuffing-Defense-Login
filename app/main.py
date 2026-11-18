@@ -1,17 +1,17 @@
 #req imports
 import sqlite3
 import bcrypt
-from fastapi import FastAPI, Form, HTTPException, Request
+from fastapi import FastAPI, Form, HTTPException
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from slowapi import _rate_limit_exceeded_handler
-from slowapi.errors import RateLimitExceeded
-from app.limiter import limiter
+from app.breached_passwords import (check_breached_password, log_failed_login,check_new_password)
 
 #init fast api
 app = FastAPI()
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# True = turn on the three new defenses
+# False = turn off the three new defenses
+PROTECTED = True
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -28,7 +28,7 @@ def create_a_table():
     db = get_db()
     #run query to create a table from login if user does not exist
     db.execute("CREATE TABLE IF NOT EXISTS users (email TEXT UNIQUE, username TEXT PRIMARY KEY, password_hash TEXT)")
-    #save to the data base
+    #save to the database
     db.commit()
     #close db connection
     db.close()
@@ -59,6 +59,8 @@ def signup(email: str=Form(...), emailConfirmation: str=Form(...), username: str
 
     if password != passwordConfirmation:
         raise HTTPException(status_code=400, detail="Passwords do not match")
+    # Reject breached passwords when protection is enabled
+    check_breached_password(password, PROTECTED)
 
     #fetch current db
     db = get_db()
@@ -81,8 +83,8 @@ def signup(email: str=Form(...), emailConfirmation: str=Form(...), username: str
 
 #setup login action for login page
 @app.post("/login")
-@limiter.limit("4 per minute")
-def login(request: Request, username: str = Form(...), password: str = Form(...)):
+
+def login(username: str = Form(...), password: str = Form(...)):
 
     #fetch db to use
     db = get_db()
@@ -95,6 +97,8 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
 
     #if the hash is not in database check_password(password, row[0])
     if row is None or not check_password(password, row[0]):
+        # Record failed login attempts when protection is enabled
+        log_failed_login(username, PROTECTED)
         raise HTTPException(status_code=401, detail="Invalid credentials")
     return {"message": "Login successful"}
 
@@ -115,7 +119,14 @@ def change_password(username_or_email: str = Form(None), oldPassword: str = Form
         db.close()
 
         raise HTTPException(status_code=401, detail="Invalid credentials")
-    
+
+    # Check the new password before updating the database
+    try:
+        check_new_password(newPassword, PROTECTED)
+    except HTTPException:
+        db.close()
+        raise
+
     db.execute("UPDATE users SET password_hash = ? WHERE username = ? OR email = ?", (hash_password(newPassword), username_or_email, username_or_email))
 
     db.commit()
