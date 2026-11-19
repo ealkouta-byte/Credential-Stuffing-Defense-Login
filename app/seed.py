@@ -1,4 +1,4 @@
-from main import get_db, create_a_table, hash_password
+from app.main import get_db, create_a_table, hash_password
 
 create_a_table()
 
@@ -14,7 +14,7 @@ for i in range(1,21):
 
     db.execute("INSERT OR IGNORE INTO users VALUES (?,?,?)", (email, username, hashed_pw))
 
-db.execute("INSERT OR IGNORE INTO users VALUES (?,?,?)", ("weakuser@email.com", "weakuser", hash_password("pass131")))
+db.execute("INSERT OR IGNORE INTO users VALUES (?,?,?)", ("weakuser@email.com", "weakuser", hash_password("welcome4")))
 
 db.commit()
 

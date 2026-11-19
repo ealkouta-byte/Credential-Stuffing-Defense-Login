@@ -101,7 +101,7 @@ A `HIT` means the login succeeded. `fail (401)` means wrong credentials. Once Ph
 To try your own guesses, edit `attack/guesses.txt`, one pair per line:
 
 ```
-weakuser:pass131
+weakuser:welcome4
 admin:admin123
 ```
 
@@ -113,7 +113,7 @@ Credential-Stuffing-Defense-Login/
 ├── requirements.txt
 ├── .gitignore
 ├── app/
-│   ├── main.py        # FastAPI app, routes, db setup
+│   ├── main.py         # FastAPI app, routes, db setup
 │   └── seed.py         # Seeds users.db with fake + weak accounts
 ├── static/
 │   ├── signup-page.html / signer.css

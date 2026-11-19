@@ -1,0 +1,8 @@
+2026-11-19 16:36:30,047 - WARNING - Failed login attempt for: weakuser
+2026-11-19 16:36:36,185 - WARNING - Failed login attempt for: weakuser
+2026-11-19 16:36:40,907 - WARNING - Failed login attempt for: weakuser
+2026-11-19 16:36:46,509 - WARNING - ratelimit 4 per 1 minute (127.0.0.1) exceeded at endpoint: /login
+2026-11-19 16:37:39,067 - WARNING - Failed login attempt for: user5
+2026-11-19 16:37:39,445 - WARNING - Failed login attempt for: user1
+2026-11-19 16:37:39,452 - WARNING - Failed login attempt for: admin
+2026-11-19 16:37:39,456 - WARNING - ratelimit 4 per 1 minute (127.0.0.1) exceeded at endpoint: /login
