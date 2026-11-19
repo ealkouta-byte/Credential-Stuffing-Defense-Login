@@ -1,13 +1,18 @@
 #req imports
 import sqlite3
 import bcrypt
-from fastapi import FastAPI, Form, HTTPException
+from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 from app.breached_passwords import (check_breached_password, log_failed_login,check_new_password)
+from app.limiter import limiter
 
 #init fast api
 app = FastAPI()
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 # True = turn on the three new defenses
 # False = turn off the three new defenses
@@ -83,8 +88,8 @@ def signup(email: str=Form(...), emailConfirmation: str=Form(...), username: str
 
 #setup login action for login page
 @app.post("/login")
-
-def login(username: str = Form(...), password: str = Form(...)):
+@limiter.limit("4 per minute")
+def login(request: Request, username: str = Form(...), password: str = Form(...)):
 
     #fetch db to use
     db = get_db()
