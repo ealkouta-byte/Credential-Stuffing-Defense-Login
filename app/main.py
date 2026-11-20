@@ -7,7 +7,12 @@ from fastapi.staticfiles import StaticFiles
 from slowapi import _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from app.breached_passwords import (check_breached_password, log_failed_login,check_new_password)
+from time import time
 from app.limiter import limiter
+
+failed_by_user = {}  # username -> (fail_count, first_fail_time)
+LOCKOUT_LIMIT = 4
+LOCKOUT_SECONDS = 120
 
 #init fast api
 app = FastAPI()
@@ -17,6 +22,7 @@ app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 # True = turn on the three new defenses
 # False = turn off the three new defenses
 PROTECTED = True
+limiter.enabled = PROTECTED
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
@@ -100,11 +106,24 @@ def login(request: Request, username: str = Form(...), password: str = Form(...)
     #disconnect db
     db.close()
 
+    if PROTECTED:
+        count, first_fail = failed_by_user.get(username, (0, 0))
+        if count >= LOCKOUT_LIMIT and time() - first_fail < LOCKOUT_SECONDS:
+            raise HTTPException(status_code=429, detail="Account temporarily locked")
+
     #if the hash is not in database check_password(password, row[0])
     if row is None or not check_password(password, row[0]):
-        # Record failed login attempts when protection is enabled
+        #record failed login attempts when protection is enabled
         log_failed_login(username, PROTECTED)
+        #count this failure toward the account lockout
+        if PROTECTED:
+            count, first_fail = failed_by_user.get(username, (0, time()))
+            failed_by_user[username] = (count + 1, first_fail)
         raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    #a successful login clears any lockout counter for this account
+    if PROTECTED:
+        failed_by_user[username] = (0, 0)
     return {"message": "Login successful"}
 
 #setup login action for change password page

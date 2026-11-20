@@ -1,12 +1,12 @@
 header{
-display: flex;
-justify-content: space-between;
-align-items: center;
-background-color: blue;
-border-bottom: solid black 2px;
-height: 60px;
-margin: 0px;
-padding: 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: blue;
+    border-bottom: solid black 2px;
+    height: 60px;
+    margin: 0px;
+    padding: 0px;
 }
 
 header a{
@@ -20,16 +20,16 @@ header a{
 /*header elements {}*/
 
 body{
-border-color:green;
-margin: 0px;
-height: 1000px;
+    border-color:green;
+    margin: 0px;
+    height: 1000px;
 }
 
 main{
-display: flex;
-justify-content: center;
-align-items: center;
-height: 700px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 700px;
 }
 
 /*start of form css*/

@@ -1,4 +1,4 @@
-weakuser:pass131
+weakuser:welcome4
 user5:wrongguess
 user1:notreal
 admin:admin123
