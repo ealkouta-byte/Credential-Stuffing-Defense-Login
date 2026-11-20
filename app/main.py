@@ -94,7 +94,10 @@ def signup(email: str=Form(...), emailConfirmation: str=Form(...), username: str
 
 #setup login action for login page
 @app.post("/login")
-@limiter.limit("4 per minute")
+@limiter.limit(
+    "3 per minute",
+    error_message="4 per 1 minute",
+)
 def login(request: Request, username: str = Form(...), password: str = Form(...)):
 
     #fetch db to use
